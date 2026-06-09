@@ -1,0 +1,17 @@
+services:
+  db:
+    container_name: tour-db
+    image: postgres:18-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=pwd
+      - POSTGRES_DB=tour_db
+    ports:
+      - 44321:5432
+    networks:
+      - db_network
+
+networks:
+  db_network:
+    driver: bridge
