@@ -1,4 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
+import {
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  OneToMany,
+} from 'typeorm';
 import { TourGuide } from './tour-guide.entity';
 import { Booking } from './booking.entity';
 import { Review } from './review.entity';
@@ -38,7 +45,13 @@ export class User {
   @Column({ type: 'text', nullable: true })
   address: string;
 
-  @Column({ type: 'varchar', length: 100, unique: true, nullable: true, name: 'google_id' })
+  @Column({
+    type: 'varchar',
+    length: 100,
+    unique: true,
+    nullable: true,
+    name: 'google_id',
+  })
   googleId: string;
 
   @CreateDateColumn({ name: 'created_at' })
@@ -47,12 +60,12 @@ export class User {
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 
-  @OneToMany(() => TourGuide, guide => guide.user)
+  @OneToMany(() => TourGuide, (guide) => guide.user)
   tourGuides: TourGuide[];
 
-  @OneToMany(() => Booking, booking => booking.user)
+  @OneToMany(() => Booking, (booking) => booking.user)
   bookings: Booking[];
 
-  @OneToMany(() => Review, review => review.user)
+  @OneToMany(() => Review, (review) => review.user)
   reviews: Review[];
 }

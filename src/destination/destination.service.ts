@@ -1,12 +1,19 @@
-import { Injectable, Logger } from '@nestjs/common';
+import {
+  ForbiddenException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DestinationImageService } from 'src/destination-image/destination-image.service';
+import { ECODE } from 'src/exceptions';
+import { DestinationLogging } from 'src/logging/common.logging';
 import { Repository } from 'typeorm';
 import { DestinationEntity } from '../entities/destination.entity';
 
 @Injectable()
 export class DestinationService {
-  private loggger = new Logger(DestinationService.name);
+  private logger = new DestinationLogging(DestinationService.name);
   constructor(
     @InjectRepository(DestinationEntity)
     private readonly destinationRepository: Repository<DestinationEntity>,
@@ -29,9 +36,7 @@ export class DestinationService {
   }
 
   async getById(id: number) {
-    // Complexity code high
-    //
-    // create # list # delete
+    // Success
     const destination = await this.destinationRepository.findOne({
       select: {
         id: true,
@@ -41,23 +46,24 @@ export class DestinationService {
       where: { id },
     });
 
+    if (!destination) {
+      throw new NotFoundException(
+        'Not found destination',
+        ECODE.DESTINATION_SERVICE_LOGIC.toString(),
+      );
+    }
+
+    this.logger.logDestination(DestinationService.name, destination, null);
+
     const images = await this.destinationImageService.getByDestinationId(
       destination.id,
     );
 
-    this.loggger.debug({
-      message: 'Data destination',
-      data: destination,
-    });
-
-    this.loggger.log({
-      message: 'Data image',
-      data: images,
-    });
-
-    console.log('Data destination', destination);
-
-    console.log('Data images', images);
+    // Simulation;
+    throw new ForbiddenException(
+      'Image got error',
+      ECODE.IMAGE_SERVICE_LOGIC.toString(),
+    );
 
     destination.images = images;
 

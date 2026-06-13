@@ -14,7 +14,6 @@ import { UserModule } from './user/user.module';
       password: 'pwd',
       database: 'tour_db',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      logging: true,
     }),
     UserModule,
     TourModule,

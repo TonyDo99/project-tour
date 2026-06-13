@@ -3,17 +3,17 @@ import {
   Controller,
   Delete,
   Get,
-  Logger,
   Param,
   Post,
   Put,
+  UseFilters,
 } from '@nestjs/common';
+import { HandleException } from 'src/exception-filters/http.exception';
+
 import { DestinationService } from './destination.service';
-
 @Controller('destination')
+@UseFilters(new HandleException())
 export class DestinationController {
-  private logger = new Logger(DestinationController.name);
-
   constructor(private readonly destinationService: DestinationService) {}
 
   @Get()
@@ -22,12 +22,8 @@ export class DestinationController {
   }
 
   @Get(':id')
-  getById(@Param('id') id: string) {
-    this.logger.debug({
-      message: 'Get by id',
-      data: id,
-    });
-    return this.destinationService.getById(+id);
+  async getById(@Param('id') id: string) {
+    return await this.destinationService.getById(+id);
   }
 
   @Post()
