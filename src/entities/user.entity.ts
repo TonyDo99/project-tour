@@ -11,7 +11,7 @@ import { Booking } from './booking.entity';
 import { Review } from './review.entity';
 
 @Entity({ name: 'users' })
-export class User {
+export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
 

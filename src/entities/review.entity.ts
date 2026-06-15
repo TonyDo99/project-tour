@@ -1,6 +1,15 @@
-import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, Index } from 'typeorm';
+import {
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
+  Index,
+} from 'typeorm';
 import { Tour } from './tour.entity';
-import { User } from './user.entity';
+import { UserEntity } from './user.entity';
 import { Booking } from './booking.entity';
 
 @Entity({ name: 'reviews' })
@@ -9,15 +18,17 @@ export class Review {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Tour, tour => tour.reviews, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Tour, (tour) => tour.reviews, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'tour_id' })
   tour: Tour;
 
-  @ManyToOne(() => User, user => user.reviews, { onDelete: 'CASCADE' })
+  @ManyToOne(() => UserEntity, (user) => user.reviews, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'user_id' })
-  user: User;
+  user: UserEntity;
 
-  @ManyToOne(() => Booking, booking => booking.reviews, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Booking, (booking) => booking.reviews, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'booking_id' })
   booking: Booking;
 

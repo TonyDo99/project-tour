@@ -1,8 +1,16 @@
-import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
-import { User } from './user.entity';
+import {
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
+import { UserEntity } from './user.entity';
 
 @Entity({ name: 'roles' })
-export class Role {
+export class RoleEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -12,7 +20,12 @@ export class Role {
   @Column({ type: 'varchar', length: 50, unique: true })
   name: string;
 
-  @Column({ type: 'varchar', length: 255, nullable: true, name: 'display_name' })
+  @Column({
+    type: 'varchar',
+    length: 255,
+    nullable: true,
+    name: 'display_name',
+  })
   displayName: string;
 
   @Column({ type: 'text', nullable: true })
@@ -21,13 +34,13 @@ export class Role {
   @Column({ type: 'boolean', default: false, name: 'is_read_only' })
   isReadOnly: boolean;
 
-  @ManyToOne(() => User, { onDelete: 'SET NULL' })
+  @ManyToOne(() => UserEntity, { onDelete: 'SET NULL' })
   @JoinColumn({ name: 'created_by_id' })
-  createdBy: User;
+  createdBy: UserEntity;
 
-  @ManyToOne(() => User, { onDelete: 'SET NULL' })
+  @ManyToOne(() => UserEntity, { onDelete: 'SET NULL' })
   @JoinColumn({ name: 'updated_by_id' })
-  updatedBy: User;
+  updatedBy: UserEntity;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

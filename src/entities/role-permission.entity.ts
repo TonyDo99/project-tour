@@ -1,5 +1,12 @@
-import { Entity, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, PrimaryColumn } from 'typeorm';
-import { Role } from './role.entity';
+import {
+  Entity,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
+  PrimaryColumn,
+} from 'typeorm';
+import { RoleEntity } from './role.entity';
 import { Permission } from './permission.entity';
 
 @Entity({ name: 'role_to_permission' })
@@ -10,9 +17,9 @@ export class RolePermission {
   @PrimaryColumn({ name: 'permission_id' })
   permissionId: number;
 
-  @ManyToOne(() => Role)
+  @ManyToOne(() => RoleEntity)
   @JoinColumn({ name: 'role_id' })
-  role: Role;
+  role: RoleEntity;
 
   @ManyToOne(() => Permission)
   @JoinColumn({ name: 'permission_id' })

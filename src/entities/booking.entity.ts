@@ -8,7 +8,7 @@ import {
   JoinColumn,
   OneToMany,
 } from 'typeorm';
-import { User } from './user.entity';
+import { UserEntity } from './user.entity';
 import { Tour } from './tour.entity';
 import { BookingParticipant } from './booking-participant.entity';
 import { Payment } from './payment.entity';
@@ -22,9 +22,11 @@ export class Booking {
   @Column({ type: 'varchar', length: 50, unique: true, name: 'booking_code' })
   bookingCode: string;
 
-  @ManyToOne(() => User, (user) => user.bookings, { onDelete: 'SET NULL' })
+  @ManyToOne(() => UserEntity, (user) => user.bookings, {
+    onDelete: 'SET NULL',
+  })
   @JoinColumn({ name: 'user_id' })
-  user: User;
+  user: UserEntity;
 
   @ManyToOne(() => Tour, (tour) => tour.bookings, { onDelete: 'SET NULL' })
   @JoinColumn({ name: 'tour_id' })
@@ -83,9 +85,9 @@ export class Booking {
   @Column({ type: 'timestamp', nullable: true, name: 'cancelled_at' })
   cancelledAt: Date;
 
-  @ManyToOne(() => User, { onDelete: 'SET NULL' })
+  @ManyToOne(() => UserEntity, { onDelete: 'SET NULL' })
   @JoinColumn({ name: 'cancelled_by' })
-  cancelledBy: User;
+  cancelledBy: UserEntity;
 
   @Column({ type: 'text', nullable: true, name: 'cancellation_reason' })
   cancellationReason: string;
@@ -93,9 +95,9 @@ export class Booking {
   @Column({ type: 'timestamp', nullable: true, name: 'confirmed_at' })
   confirmedAt: Date;
 
-  @ManyToOne(() => User, { onDelete: 'SET NULL' })
+  @ManyToOne(() => UserEntity, { onDelete: 'SET NULL' })
   @JoinColumn({ name: 'confirmed_by' })
-  confirmedBy: User;
+  confirmedBy: UserEntity;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

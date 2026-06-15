@@ -1,5 +1,13 @@
-import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
-import { User } from './user.entity';
+import {
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
+import { UserEntity } from './user.entity';
 
 @Entity({ name: 'features' })
 export class Feature {
@@ -21,13 +29,13 @@ export class Feature {
   @Column({ type: 'varchar', length: 36, nullable: true, name: 'parent_id' })
   parentId: string;
 
-  @ManyToOne(() => User, { onDelete: 'SET NULL' })
+  @ManyToOne(() => UserEntity, { onDelete: 'SET NULL' })
   @JoinColumn({ name: 'created_by_id' })
-  createdBy: User;
+  createdBy: UserEntity;
 
-  @ManyToOne(() => User, { onDelete: 'SET NULL' })
+  @ManyToOne(() => UserEntity, { onDelete: 'SET NULL' })
   @JoinColumn({ name: 'updated_by_id' })
-  updatedBy: User;
+  updatedBy: UserEntity;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

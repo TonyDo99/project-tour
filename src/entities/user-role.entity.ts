@@ -1,22 +1,29 @@
-import { Entity, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, PrimaryColumn } from 'typeorm';
-import { User } from './user.entity';
-import { Role } from './role.entity';
+import {
+  Entity,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
+  PrimaryColumn,
+} from 'typeorm';
+import { UserEntity } from './user.entity';
+import { RoleEntity } from './role.entity';
 
 @Entity({ name: 'user_to_role' })
-export class UserRole {
+export class UserRoleEntity {
   @PrimaryColumn({ name: 'user_id' })
   userId: number;
 
   @PrimaryColumn({ name: 'role_id' })
   roleId: number;
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => UserEntity)
   @JoinColumn({ name: 'user_id' })
-  user: User;
+  user: UserEntity;
 
-  @ManyToOne(() => Role)
+  @ManyToOne(() => RoleEntity)
   @JoinColumn({ name: 'role_id' })
-  role: Role;
+  role: RoleEntity;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

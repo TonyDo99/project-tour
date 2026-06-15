@@ -1,5 +1,12 @@
-import { Entity, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, PrimaryColumn } from 'typeorm';
-import { User } from './user.entity';
+import {
+  Entity,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
+  PrimaryColumn,
+} from 'typeorm';
+import { UserEntity } from './user.entity';
 import { Permission } from './permission.entity';
 
 @Entity({ name: 'user_to_permission' })
@@ -10,9 +17,9 @@ export class UserPermission {
   @PrimaryColumn({ name: 'permission_id' })
   permissionId: number;
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => UserEntity)
   @JoinColumn({ name: 'user_id' })
-  user: User;
+  user: UserEntity;
 
   @ManyToOne(() => Permission)
   @JoinColumn({ name: 'permission_id' })

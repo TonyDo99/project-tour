@@ -8,7 +8,7 @@ import {
   JoinColumn,
   OneToMany,
 } from 'typeorm';
-import { User } from './user.entity';
+import { UserEntity } from './user.entity';
 import { Tour } from './tour.entity';
 
 @Entity({ name: 'tour_guides' })
@@ -16,9 +16,11 @@ export class TourGuide {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => User, (user) => user.tourGuides, { onDelete: 'SET NULL' })
+  @ManyToOne(() => UserEntity, (user) => user.tourGuides, {
+    onDelete: 'SET NULL',
+  })
   @JoinColumn({ name: 'user_id' })
-  user: User;
+  user: UserEntity;
 
   @Column({ type: 'varchar', length: 255, name: 'full_name' })
   fullName: string;

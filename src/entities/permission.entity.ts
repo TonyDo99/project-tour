@@ -1,5 +1,13 @@
-import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
-import { User } from './user.entity';
+import {
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
+import { UserEntity } from './user.entity';
 
 @Entity({ name: 'permissions' })
 export class Permission {
@@ -12,7 +20,12 @@ export class Permission {
   @Column({ type: 'varchar', length: 100, unique: true })
   name: string;
 
-  @Column({ type: 'varchar', length: 255, nullable: true, name: 'display_name' })
+  @Column({
+    type: 'varchar',
+    length: 255,
+    nullable: true,
+    name: 'display_name',
+  })
   displayName: string;
 
   @Column({ type: 'varchar', length: 100, nullable: true, name: 'module_name' })
@@ -24,13 +37,13 @@ export class Permission {
   @Column({ type: 'varchar', length: 20, default: 'FEATURE' })
   type: string;
 
-  @ManyToOne(() => User, { onDelete: 'SET NULL' })
+  @ManyToOne(() => UserEntity, { onDelete: 'SET NULL' })
   @JoinColumn({ name: 'created_by_id' })
-  createdBy: User;
+  createdBy: UserEntity;
 
-  @ManyToOne(() => User, { onDelete: 'SET NULL' })
+  @ManyToOne(() => UserEntity, { onDelete: 'SET NULL' })
   @JoinColumn({ name: 'updated_by_id' })
-  updatedBy: User;
+  updatedBy: UserEntity;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

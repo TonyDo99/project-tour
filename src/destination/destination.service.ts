@@ -1,6 +1,5 @@
 import {
   ForbiddenException,
-  HttpStatus,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -57,12 +56,6 @@ export class DestinationService {
 
     const images = await this.destinationImageService.getByDestinationId(
       destination.id,
-    );
-
-    // Simulation;
-    throw new ForbiddenException(
-      'Image got error',
-      ECODE.IMAGE_SERVICE_LOGIC.toString(),
     );
 
     destination.images = images;
