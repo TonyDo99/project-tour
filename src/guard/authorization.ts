@@ -26,6 +26,8 @@ export class RolesGuard implements CanActivate {
     const ctx = context.switchToHttp();
     const request = ctx.getRequest();
 
+    console.log('Guard');
+
     const token = this.extractTokenFromHeader(request);
 
     if (!token) {
@@ -39,7 +41,7 @@ export class RolesGuard implements CanActivate {
 
     // context.getHandler() - On level Route
     // context.getClass() - On level Route
-    const roles = this.reflector.get('roles', context.getClass());
+    const roles = this.reflector.get('roles', context.getHandler());
 
     console.log('required roles', roles);
 

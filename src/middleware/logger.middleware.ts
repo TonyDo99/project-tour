@@ -7,7 +7,7 @@ export class LoggerMiddleware implements NestMiddleware {
 
   use(req: Request, res: Response, next: NextFunction) {
     const { ip, method, originalUrl } = req;
-    // const userAgent = req.get('user-agent') || '';
+    console.log('Middleware');
 
     // Ghi log lúc request mới vào
     this.logger.log(`[REQUEST] ${method} ${originalUrl} - IP: ${ip}`);

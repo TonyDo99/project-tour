@@ -70,6 +70,8 @@ export class DestinationService {
         '-' +
         Math.random().toString(36).substring(2, 7);
     }
+
+    throw new ForbiddenException('Logic failed');
     const destination = this.destinationRepository.create(destinationInfo);
     return this.destinationRepository.save(destination);
   }

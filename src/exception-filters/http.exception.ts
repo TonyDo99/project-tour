@@ -3,6 +3,7 @@ import {
   ExceptionFilter,
   Catch,
   HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 
@@ -12,14 +13,13 @@ export class HandleException implements ExceptionFilter {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest<Request>();
-    const status = exception.getStatus();
 
-    response.status(status).json({
-      statusCode: status,
+    return response.status(HttpStatus.FORBIDDEN).json({
+      statusCode: HttpStatus.FORBIDDEN,
       timestamp: new Date().toISOString(),
       path: request.url,
-      msg: exception.response.message,
-      code: exception.response.error,
+      msg: exception.response.data.message,
+      code: exception.response.data.error,
     });
   }
 }

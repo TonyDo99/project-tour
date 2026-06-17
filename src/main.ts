@@ -2,6 +2,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { HandleException } from './exception-filters/http.exception';
+import { ResponseInterceptor } from './interceptor/logger.interceptor';
 import { DestinationLogging } from './logging/common.logging';
 
 // Global = root
@@ -10,8 +11,13 @@ async function bootstrap() {
     logger: new DestinationLogging(),
   });
   app.setGlobalPrefix('api');
-  app.useGlobalPipes(new ValidationPipe());
-  app.useGlobalFilters(new HandleException());
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+    }),
+  );
+  app.useGlobalInterceptors(new ResponseInterceptor());
+  // app.useGlobalFilters(new HandleException());
   await app.listen(3000);
 }
 bootstrap();

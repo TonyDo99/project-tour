@@ -3,20 +3,52 @@ import {
   NestInterceptor,
   ExecutionContext,
   CallHandler,
+  BadGatewayException,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Request } from 'express';
+import { Observable, throwError } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
+import { response } from './data.transform';
+
+enum EResponse {
+  SUCCESS = 'Success',
+  FAILED = 'Failed',
+}
 
 @Injectable()
-export class LoggingInterceptor implements NestInterceptor {
+export class ResponseInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
-    console.log('Before...');
+    // const ctx = context.switchToHttp();
+    // const resp = ctx.getResponse<Response>();
+    // // console.log('Before route handler...', request);
 
-    console.log('conext', context);
+    // for (const property of request.body) {
+    //   if (property === 'name') {
+    //     property['name'] = property.name.toString();
+    //   }
+    // }
+    //
 
     const now = Date.now();
+    // return next
+    //   .handle()
+    //   .pipe(map((data) => response(EResponse.SUCCESS, data, now)));
+
     return next
       .handle()
-      .pipe(tap(() => console.log(`After... ${Date.now() - now}ms`)));
+      .pipe(map((data) => response(EResponse.SUCCESS, data, now)))
+      .pipe(
+        catchError((err) =>
+          throwError(
+            () =>
+              new HttpException(
+                response(EResponse.SUCCESS, err, now),
+                HttpStatus.FORBIDDEN,
+              ),
+          ),
+        ),
+      );
   }
 }
