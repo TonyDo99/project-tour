@@ -9,6 +9,7 @@ import {
 import { TourGuide } from './tour-guide.entity';
 import { Booking } from './booking.entity';
 import { Review } from './review.entity';
+import { Exclude } from 'class-transformer';
 
 @Entity({ name: 'users' })
 export class UserEntity {
@@ -18,6 +19,7 @@ export class UserEntity {
   @Column({ type: 'varchar', length: 255, unique: true })
   email: string;
 
+  @Exclude({ toPlainOnly: true })
   @Column({ type: 'varchar', length: 255 })
   password: string;
 

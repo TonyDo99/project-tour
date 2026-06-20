@@ -20,4 +20,19 @@ export class UserService {
       password,
     });
   }
+
+  /**
+   * Option 1: Xử lý thông qua logic trên UserService - Tự control và manual thủ công trong code
+   * Option 2: Thông qua SQL - Tuơng tự cách 1 nhưng thông qua ORM
+   * Option 3: Thông qua Interceptor của Nestjs - Chuẩn trong application
+   */
+  async getUserById(id: number): Promise<Omit<UserEntity, 'password'>> {
+    try {
+      return await this.userRepository.findOneBy({
+        id,
+      });
+    } catch (error) {
+      console.error('error', error);
+    }
+  }
 }
